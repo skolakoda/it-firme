@@ -32,7 +32,23 @@ export default {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(this.map);
 		},
+<<<<<<< Updated upstream
 		initLayers() {}
+=======
+		initLayers() {},
+		showUserLoc() {
+			if (navigator.geolocation) {
+			    navigator.geolocation.getCurrentPosition(this.showPosition);
+			  } else {
+			    this.error = "Geolocation is not supported by this browser.";
+			  }
+		},
+		showPosition(position) {
+			this.userLat =  position.coords.latitude
+			this.userLong = position.coords.longitude
+			L.marker([]).addTo(this.map)
+		}
+>>>>>>> Stashed changes
 	},
 	components: {
 		LMap,
