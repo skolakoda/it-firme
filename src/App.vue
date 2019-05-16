@@ -7,7 +7,7 @@
     <router-view/>
   </div>
 </template>
-
+/*komentar */
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
