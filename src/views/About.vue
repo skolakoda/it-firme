@@ -9,7 +9,6 @@
   				<h1>Ovo je druga kolona</h1>
   			</div>	
   		</div>
-  	</div>
-    
+  	</div>    
   </div>
 </template>
