@@ -5,16 +5,24 @@
       <router-link to="/about">About</router-link>
     </div>
     <router-view/>
+    <div>footer</div>
   </div>
 </template>
 /*komentar */
 <style>
+* {
+  box-sizing: border-box;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+
+  display: grid;
+  grid-template-rows: 10vh auto 10vh;
+  height: 100vh;
 }
 #nav {
   padding: 30px;

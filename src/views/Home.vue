@@ -1,15 +1,22 @@
 <template>
-  <div>
-    <div class="loc"><button @click="showUserLoc" class="loc btn btn-primary">Prikaži moju lokaciju</button></div>
-    <p>User Latitude: {{ userLat }}</p>
-    <p>User Longitude: {{ userLong }}</p>
+  <div class="wrap">
+  	<div class="main">
+    	<div class="loc"><button @click="showUserLoc" class="loc btn btn-primary">Prikaži moju lokaciju</button></div>
+    	<p>User Latitude: {{ userLat }}</p>
+    	<p>User Longitude: {{ userLong }}</p>
+    </div>
 	<div id="map"></div>
   </div>
 </template>
 
 <style>
+	.wrap {
+		display: grid;
+		grid-template-rows: 20vh auto;
+	}
 	#map {
-		height: 500px;
+		max-height: 100%;
+		margin-top: 10px;
 	}
 
 	.loc {
@@ -18,7 +25,7 @@
 </style>
 
 <script>
-import { LMap, LTileLayer, LMarker } from 'vue2-leaflet'
+import { LMap, LTileLayer, LMarker, LIcon } from 'vue2-leaflet'
 import 'leaflet/dist/leaflet.css'
 
 export default {
@@ -57,7 +64,7 @@ export default {
 			this.userLat =  position.coords.latitude
 			this.userLong = position.coords.longitude
 
-			L.marker([]).addTo(this.map)
+			L.marker([this.userLat, this.userLong], { icon: myIcon, title: 'pozicija'}).addTo(this.map).bindPopup('vasa pozicija')
 		}
 
 
