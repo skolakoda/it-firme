@@ -11,9 +11,9 @@
   			</div>
   			<div class="col-md-3">
   				<h1>Ovo je druga kolona</h1>
-  			</div>	
+  			</div>
   		</div>
-  	</div>    
+  	</div>
   </div>
 </template>
 
@@ -28,49 +28,49 @@
 </style>
 
 <script>
-	import { LMap, LTileLayer, LMarker } from 'vue2-leaflet'
+import { LMap, LTileLayer, LMarker } from 'vue2-leaflet'
 
-	export default{
-		data() {
-			return {
-				userLat: '',
-				userLong: '',
-				zoom: 16,
-				center: L.latLng(44.7866, 20.4489),
-				url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-				marker: L.latLng(44.7866, 20.4489)
-			} 
-		},
-		components: {
-			LMap,
-			LTileLayer,
-			LMarker,
-		},
-		mounted() {
-			delete L.Icon.Default.prototype._getIconUrl;
+export default {
+  data () {
+    return {
+      userLat: '',
+      userLong: '',
+      zoom: 16,
+      center: L.latLng(44.7866, 20.4489),
+      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      marker: L.latLng(44.7866, 20.4489)
+    }
+  },
+  components: {
+    LMap,
+    LTileLayer,
+    LMarker
+  },
+  mounted () {
+    delete L.Icon.Default.prototype._getIconUrl
 
-			L.Icon.Default.mergeOptions({
+    L.Icon.Default.mergeOptions({
 			    iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
 			    iconUrl: require('leaflet/dist/images/marker-icon.png'),
 			    shadowUrl: require('leaflet/dist/images/marker-shadow.png')
-			});
-		},
-		methods: {
-			showUserLoc() {
-			if (navigator.geolocation) {
-			    navigator.geolocation.getCurrentPosition(this.showPosition);
+    })
+  },
+  methods: {
+    showUserLoc () {
+      if (navigator.geolocation) {
+			    navigator.geolocation.getCurrentPosition(this.showPosition)
 			  } else {
-			    this.error = "Geolocation is not supported by this browser.";
+			    this.error = 'Geolocation is not supported by this browser.'
 			  }
-			},
-			showPosition(position) {
-				this.userLat =  position.coords.latitude
-				this.userLong = position.coords.longitude
+    },
+    showPosition (position) {
+      this.userLat = position.coords.latitude
+      this.userLong = position.coords.longitude
 
-				this.marker = L.latLng(this.userLat, this.userLong)
-				this.center = L.latLng(this.userLat, this.userLong)
-			}
-		}
-	}
+      this.marker = L.latLng(this.userLat, this.userLong)
+      this.center = L.latLng(this.userLat, this.userLong)
+    }
+  }
+}
 </script>
