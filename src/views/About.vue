@@ -7,10 +7,16 @@
   				<l-map :zoom="zoom" :center="center">
      				 <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
       				 <l-marker :lat-lng="marker"></l-marker>
+      				 <span v-for="single in markersByCat">
+      				 	<l-marker :lat-lng="single"></l-marker>
+      				 </span>
     			</l-map>
   			</div>
   			<div class="col-md-3">
-  				<h1>Ovo je druga kolona</h1>
+  				<div style="margin-bottom:5px;" v-for="category in categories">
+  					<button @click="showByCat(category)" class="btn btn-success">{{ category }}</button>
+  				</div>
+  				
   			</div>	
   		</div>
   	</div>    
@@ -39,7 +45,10 @@
 				center: L.latLng(44.7866, 20.4489),
 				url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-				marker: L.latLng(44.7866, 20.4489)
+				marker: L.latLng(44.7866, 20.4489),
+				markersByCat: [],
+				allLocations: [],
+				categories: []
 			} 
 		},
 		components: {
@@ -55,6 +64,7 @@
 			    iconUrl: require('leaflet/dist/images/marker-icon.png'),
 			    shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 			});
+			this.getLocations()
 		},
 		methods: {
 			showUserLoc() {
@@ -70,6 +80,29 @@
 
 				this.marker = L.latLng(this.userLat, this.userLong)
 				this.center = L.latLng(this.userLat, this.userLong)
+			},
+			getLocations() {
+				fetch('https://spomenici-api.herokuapp.com/spomenici')
+				.then(res => res.json())
+				.then(data => {
+					const cat = new Set()
+					data.forEach((item, index) => {
+						cat.add(item.kategorija)
+					})
+					this.categories = cat
+					this.allLocations = data
+				})
+			},
+			showByCat(cat) {
+				const locations = this.allLocations
+				this.markersByCat = []
+				locations.forEach((item, index) => {
+					if(item.kategorija === cat) {
+						this.markersByCat.push(L.latLng(item.lokacija.lat, item.lokacija.lon))
+					}
+				})
+				console.log(this.markersByCat)	
+				
 			}
 		}
 	}
