@@ -29,50 +29,49 @@ import { LMap, LTileLayer, LMarker, LIcon } from 'vue2-leaflet'
 import 'leaflet/dist/leaflet.css'
 
 export default {
-	data() {
-		return {
-			map: null,
-			tileLayer: null,
-			layers: [],
-			error: '',
-			userLat: '',
-			userLong: ''
-		}
-	},
-	mounted() {
-		this.initMap(),
-		this.initLayers()
-	},
-	methods: {
-		initMap() {
-			this.map = L.map('map').setView([44.7866, 20.4489], 15)
-			/* https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png */
-			this.tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  data () {
+    return {
+      map: null,
+      tileLayer: null,
+      layers: [],
+      error: '',
+      userLat: '',
+      userLong: ''
+    }
+  },
+  mounted () {
+    this.initMap(),
+    this.initLayers()
+  },
+  methods: {
+    initMap () {
+      this.map = L.map('map').setView([44.7866, 20.4489], 15)
+      /* https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png */
+      this.tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-			}).addTo(this.map)
-		},
+      }).addTo(this.map)
+    },
 
-		initLayers() {},
-		showUserLoc() {
-			if (navigator.geolocation) {
-			    navigator.geolocation.getCurrentPosition(this.showPosition);
+    initLayers () {},
+    showUserLoc () {
+      if (navigator.geolocation) {
+			    navigator.geolocation.getCurrentPosition(this.showPosition)
 			  } else {
-			    this.error = "Geolocation is not supported by this browser.";
+			    this.error = 'Geolocation is not supported by this browser.'
 			  }
-		},
-		showPosition(position) {
-			this.userLat =  position.coords.latitude
-			this.userLong = position.coords.longitude
+    },
+    showPosition (position) {
+      this.userLat = position.coords.latitude
+      this.userLong = position.coords.longitude
 
-			L.marker([this.userLat, this.userLong], { icon: myIcon, title: 'pozicija'}).addTo(this.map).bindPopup('vasa pozicija')
-		}
+      L.marker([this.userLat, this.userLong], { icon: myIcon, title: 'pozicija' }).addTo(this.map).bindPopup('vasa pozicija')
+    }
 
-
-	},
-	components: {
-		LMap,
-		LTileLayer,
-		LMarker
-	}
+  },
+  components: {
+    LMap,
+    LTileLayer,
+    LMarker
+  }
 }
 </script>
