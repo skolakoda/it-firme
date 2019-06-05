@@ -82,15 +82,15 @@ export default {
       this.center = L.latLng(this.userLat, this.userLong)
     },
     getLocations () {
-      fetch('https://spomenici-api.herokuapp.com/spomenici')
+      fetch('https://spomenici-api.herokuapp.com/kolekcija/spomenici')
         .then(res => res.json())
-        .then(data => {
+        .then(res => {
           const cat = new Set()
-          data.forEach((item, index) => {
+          res.data.forEach((item, index) => {
             cat.add(item.kategorija)
           })
           this.categories = cat
-          this.allLocations = data
+          this.allLocations = res.data
         })
     },
     showByCat (cat) {
