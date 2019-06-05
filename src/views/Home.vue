@@ -65,6 +65,7 @@ export default {
       this.userLong = position.coords.longitude
 
       L.marker([this.userLat, this.userLong]).addTo(this.map).bindPopup('vasa pozicija')
+      this.map.panTo(new L.LatLng(this.userLat, this.userLong))
     }
 
   },
