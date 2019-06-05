@@ -64,7 +64,7 @@ export default {
       this.userLat = position.coords.latitude
       this.userLong = position.coords.longitude
 
-      L.marker([this.userLat, this.userLong], { icon: myIcon, title: 'pozicija' }).addTo(this.map).bindPopup('vasa pozicija')
+      L.marker([this.userLat, this.userLong]).addTo(this.map).bindPopup('vasa pozicija')
     }
 
   },
