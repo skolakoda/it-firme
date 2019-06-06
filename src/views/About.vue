@@ -19,10 +19,10 @@
   				<div style="margin-bottom:5px;" v-for="category in categories">
   					<button @click="showByCat(category)" class="btn btn-success">{{ category }}</button>
   				</div>
-  				
-  			</div>	
+
+  			</div>
   		</div>
-  	</div>    
+  	</div>
   </div>
 </template>
 
@@ -44,7 +44,7 @@
 			return {
 				userLat: '',
 				userLong: '',
-				zoom: 16,
+				zoom: 12,
 				center: L.latLng(44.7866, 20.4489),
 				url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -63,28 +63,27 @@
 		mounted() {
 			delete L.Icon.Default.prototype._getIconUrl;
 
-			L.Icon.Default.mergeOptions({
+    		L.Icon.Default.mergeOptions({
 			    iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
 			    iconUrl: require('leaflet/dist/images/marker-icon.png'),
 			    shadowUrl: require('leaflet/dist/images/marker-shadow.png')
-			});
-			this.getLocations()
-		},
-		methods: {
-			showUserLoc() {
-			if (navigator.geolocation) {
-			    navigator.geolocation.getCurrentPosition(this.showPosition);
-			  } else {
-			    this.error = "Geolocation is not supported by this browser.";
-			  }
-			},
-			showPosition(position) {
-				this.userLat =  position.coords.latitude
-				this.userLong = position.coords.longitude
-
+    		})
+    		this.getLocations()
+  		},
+	    methods: {
+	    	showUserLoc () {
+	      		if (navigator.geolocation) {
+			    	navigator.geolocation.getCurrentPosition(this.showPosition)
+		  		} else {
+			    	this.error = 'Geolocation is not supported by this browser.'
+		  		}
+	    	},
+	    	showPosition (position) {
+	      		this.userLat = position.coords.latitude
+	      		this.userLong = position.coords.longitude
 				this.marker = L.latLng(this.userLat, this.userLong)
 				this.center = L.latLng(this.userLat, this.userLong)
-			},
+				},
 			getLocations() {
 				fetch('https://spomenici-api.herokuapp.com/kolekcija/itfirme')
 				.then(res => res.json())
@@ -106,9 +105,9 @@
 						this.markersByCat.push(L.latLng(item.lokacija.lat, item.lokacija.lon))
 					}
 				})
-				console.log(this.markersByCat)	
-				
+				console.log(this.markersByCat)		
 			}
 		}
 	}
+
 </script>
