@@ -6,9 +6,12 @@
   			<div class=" map2 col-md-9">
   				<l-map :zoom="zoom" :center="center">
      				 <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-      				 <l-marker :lat-lng="marker"></l-marker>
-      				 <span v-for="single in markersByCat">
-      				 	<l-marker :lat-lng="single"></l-marker>
+      				 <l-marker :lat-lng="marker">
+      				 	<l-popup>Your Position</l-popup>
+      				 </l-marker>
+      				 <span v-for="(single) in markersByCat">
+      				 	<l-marker :lat-lng="single">
+      				 	</l-marker>
       				 </span>
     			</l-map>
   			</div>
@@ -34,7 +37,7 @@
 </style>
 
 <script>
-	import { LMap, LTileLayer, LMarker } from 'vue2-leaflet'
+	import { LMap, LTileLayer, LMarker, LPopup } from 'vue2-leaflet'
 
 	export default{
 		data() {
@@ -55,6 +58,7 @@
 			LMap,
 			LTileLayer,
 			LMarker,
+			LPopup
 		},
 		mounted() {
 			delete L.Icon.Default.prototype._getIconUrl;
@@ -82,15 +86,16 @@
 				this.center = L.latLng(this.userLat, this.userLong)
 			},
 			getLocations() {
-				fetch('https://spomenici-api.herokuapp.com/spomenici')
+				fetch('https://spomenici-api.herokuapp.com/kolekcija/itfirme')
 				.then(res => res.json())
 				.then(data => {
 					const cat = new Set()
-					data.forEach((item, index) => {
+					const result = data.data
+					result.forEach((item, index) => {
 						cat.add(item.kategorija)
 					})
 					this.categories = cat
-					this.allLocations = data
+					this.allLocations = result
 				})
 			},
 			showByCat(cat) {
