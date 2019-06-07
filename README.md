@@ -1,29 +1,20 @@
 # map-app
 
-## Project setup
+Mapa sa lokacijama i pretragom domaćih IT firmi.
+
+## Razvoj
+
 ```
 npm install
-```
-
-### Compiles and hot-reloads for development
-```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Deploy on Github pages
 ```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
+npm run deploy
 ```
 
 ### Lints and fixes files
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

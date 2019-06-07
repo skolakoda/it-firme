@@ -37,31 +37,31 @@
 </style>
 
 <script>
-	import { LMap, LTileLayer, LMarker, LPopup } from 'vue2-leaflet'
+import { LMap, LTileLayer, LMarker, LPopup } from 'vue2-leaflet'
 
-	export default{
-		data() {
-			return {
-				userLat: '',
-				userLong: '',
-				zoom: 12,
-				center: L.latLng(44.7866, 20.4489),
-				url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-				marker: L.latLng(44.7866, 20.4489),
-				markersByCat: [],
-				allLocations: [],
-				categories: []
-			} 
-		},
-		components: {
-			LMap,
-			LTileLayer,
-			LMarker,
-			LPopup
-		},
-		mounted() {
-			delete L.Icon.Default.prototype._getIconUrl;
+export default {
+  data () {
+    return {
+      userLat: '',
+      userLong: '',
+      zoom: 12,
+      center: L.latLng(44.7866, 20.4489),
+      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      marker: L.latLng(44.7866, 20.4489),
+      markersByCat: [],
+      allLocations: [],
+      categories: []
+    }
+  },
+  components: {
+    LMap,
+    LTileLayer,
+    LMarker,
+    LPopup
+  },
+  mounted () {
+    delete L.Icon.Default.prototype._getIconUrl
 
     		L.Icon.Default.mergeOptions({
 			    iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
@@ -81,33 +81,33 @@
 	    	showPosition (position) {
 	      		this.userLat = position.coords.latitude
 	      		this.userLong = position.coords.longitude
-				this.marker = L.latLng(this.userLat, this.userLong)
-				this.center = L.latLng(this.userLat, this.userLong)
-				},
-			getLocations() {
-				fetch('https://spomenici-api.herokuapp.com/kolekcija/itfirme')
-				.then(res => res.json())
-				.then(data => {
-					const cat = new Set()
-					const result = data.data
-					result.forEach((item, index) => {
-						cat.add(item.kategorija)
-					})
-					this.categories = cat
-					this.allLocations = result
-				})
-			},
-			showByCat(cat) {
-				const locations = this.allLocations
-				this.markersByCat = []
-				locations.forEach((item, index) => {
-					if(item.kategorija === cat) {
-						this.markersByCat.push(L.latLng(item.lokacija.lat, item.lokacija.lon))
-					}
-				})
-				console.log(this.markersByCat)		
-			}
-		}
-	}
+      this.marker = L.latLng(this.userLat, this.userLong)
+      this.center = L.latLng(this.userLat, this.userLong)
+    },
+    getLocations () {
+      fetch('https://spomenici-api.herokuapp.com/kolekcija/itfirme')
+        .then(res => res.json())
+        .then(data => {
+          const cat = new Set()
+          const result = data.data
+          result.forEach((item, index) => {
+            cat.add(item.kategorija)
+          })
+          this.categories = cat
+          this.allLocations = result
+        })
+    },
+    showByCat (cat) {
+      const locations = this.allLocations
+      this.markersByCat = []
+      locations.forEach((item, index) => {
+        if (item.kategorija === cat) {
+          this.markersByCat.push(L.latLng(item.lokacija.lat, item.lokacija.lon))
+        }
+      })
+      console.log(this.markersByCat)
+    }
+  }
+}
 
 </script>
