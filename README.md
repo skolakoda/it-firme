@@ -1,6 +1,8 @@
-# map-app
+# IT firme map app
 
 Mapa sa lokacijama i pretragom domaćih IT firmi.
+
+Koristi javni [Spomenici API](https://github.com/skolakoda/spomenici-api).
 
 ## Razvoj
 

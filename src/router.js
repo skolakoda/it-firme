@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Mapa from './views/Mapa.vue'
-import Dodaj from './views/Dodaj.vue'
 
 Vue.use(Router)
 
@@ -17,7 +16,7 @@ export default new Router({
     {
       path: '/dodaj',
       name: 'dodaj',
-      component: Dodaj
+      component: () => import('./views/Dodaj.vue')
     }
   ]
 })

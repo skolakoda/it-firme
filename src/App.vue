@@ -6,7 +6,7 @@
       <router-link to="/prijava">Ulaz/Prijava</router-link>
     </nav>
     <router-view/>
-    <div>footer</div>
+    <div>Mapa sa lokacijama domaćih IT firmi. Školakoda 2019.</div>
   </div>
 </template>
 

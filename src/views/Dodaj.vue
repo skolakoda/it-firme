@@ -1,78 +1,53 @@
 <template>
-  <div class="wrap">
-  	<div class="main">
-    	<div class="loc"><button @click="showUserLoc" class="loc btn btn-primary">Prikaži moju lokaciju</button></div>
-    	<p>User Latitude: {{ userLat }}</p>
-    	<p>User Longitude: {{ userLong }}</p>
-    </div>
-	<div id="map"></div>
+  <div>
+    <button @click="showUserLoc" class="btn btn-primary margin">Dobavi moju lokaciju</button>
+
+    <form action="https://spomenici-api.herokuapp.com/kolekcija/itfirme/dodaj" method="POST">
+      <label for="naslov">naslov: </label>
+      <input name="naslov" id="naslov" required>
+
+      <label for="kategorija">kategorija: </label>
+      <input name="kategorija" id="kategorija" required>
+
+      <label for="opis">opis: </label>
+      <input name="opis" id="opis" required>
+
+      <label for="lat">lat: </label>
+      <input v-model="userLat" name="lat" id="lat" required>
+
+      <label for="lon">lon: </label>
+      <input v-model="userLong" name="lon" id="lon" required>
+
+      <p><button class="btn btn-primary margin">Pošalji</button></p>
+    </form>
   </div>
 </template>
 
 <style>
-	.wrap {
-		display: grid;
-		grid-template-rows: 20vh auto;
-	}
-	#map {
-		max-height: 100%;
-		margin-top: 10px;
-	}
-
-	.loc {
-		margin-bottom: 15px;
+  label {
+    display: block;
+  }
+	.margin {
+		margin: 15px 0;
 	}
 </style>
 
 <script>
-import { LMap, LTileLayer, LMarker, LIcon } from 'vue2-leaflet'
-import 'leaflet/dist/leaflet.css'
-
 export default {
   data () {
     return {
-      map: null,
-      tileLayer: null,
-      layers: [],
-      error: '',
       userLat: '',
       userLong: ''
     }
   },
-  mounted () {
-    this.initMap(),
-    this.initLayers()
-  },
   methods: {
-    initMap () {
-      this.map = L.map('map').setView([44.7866, 20.4489], 15)
-      /* https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png */
-      this.tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(this.map)
-    },
-
-    initLayers () {},
     showUserLoc () {
-      if (navigator.geolocation) {
-			    navigator.geolocation.getCurrentPosition(this.showPosition)
-			  } else {
-			    this.error = 'Geolocation is not supported by this browser.'
-			  }
+        navigator.geolocation.getCurrentPosition(this.showPosition)
     },
     showPosition (position) {
       this.userLat = position.coords.latitude
       this.userLong = position.coords.longitude
-
-      L.marker([this.userLat, this.userLong]).addTo(this.map).bindPopup('vasa pozicija')
-      this.map.panTo(new L.LatLng(this.userLat, this.userLong))
     }
-
-  },
-  components: {
-    LMap,
-    LTileLayer,
-    LMarker
   }
 }
 </script>
