@@ -1,12 +1,11 @@
 <template>
-  <div>
-    <button @click="showUserLoc" class="btn btn-primary margin">Dobavi moju lokaciju</button>
-
+  <div class="wrap">
+    <h2>Dodaj novu IT firmu</h2>
     <form action="https://spomenici-api.herokuapp.com/kolekcija/itfirme/dodaj" method="POST">
       <label for="naslov">naslov: </label>
       <input name="naslov" id="naslov" required>
 
-      <label for="kategorija">kategorija: </label>
+      <label for="kategorija" title="Npr. gaming, web-dev, qa">kategorija: </label>
       <input name="kategorija" id="kategorija" required>
 
       <label for="opis">opis: </label>
@@ -18,18 +17,26 @@
       <label for="lon">lon: </label>
       <input v-model="userLong" name="lon" id="lon" required>
 
-      <p><button class="btn btn-primary margin">Pošalji</button></p>
+      <button @click="showUserLoc" type="button" class="btn btn-primary margin">Popuni moju lokaciju</button>
+      <button class="btn btn-primary margin">Pošalji</button>
     </form>
   </div>
 </template>
 
 <style>
-  label {
-    display: block;
-  }
-	.margin {
-		margin: 15px 0;
-	}
+.wrap {
+  width: 450px;
+  margin: 0 auto;
+}
+form {
+  display: grid;
+}
+label {
+  display: block;
+}
+.margin {
+  margin: 15px 0;
+}
 </style>
 
 <script>
