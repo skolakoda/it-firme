@@ -9,14 +9,14 @@
       				 <l-marker :lat-lng="marker">
       				 	<l-popup>Your Position</l-popup>
       				 </l-marker>
-      				 <span v-for="(single) in markersByCat">
+      				 <span v-for="single in markersByCat" :key="single">
       				 	<l-marker :lat-lng="single">
       				 	</l-marker>
       				 </span>
     			</l-map>
   			</div>
   			<div class="col-md-3">
-  				<div style="margin-bottom:5px;" v-for="category in categories">
+  				<div style="margin-bottom:5px;" v-for="category in categories" :key="category">
   					<button @click="showByCat(category)" class="btn btn-success">{{ category }}</button>
   				</div>
 
