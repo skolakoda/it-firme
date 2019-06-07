@@ -9,10 +9,10 @@
         <div class="map2 col-md-9">
           <l-map :zoom="zoom" :center="center">
             <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-            <l-marker :lat-lng="marker">
+            <l-marker :lat-lng="myMarker">
               <l-popup>Your Position</l-popup>
             </l-marker>
-            <span v-for="marker in markersByCat" :key="marker.lat">
+            <span v-for="marker in markers" :key="marker.lat">
               <l-marker :lat-lng="marker"></l-marker>
             </span>
           </l-map>
@@ -51,8 +51,8 @@ export default {
       url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      marker: L.latLng(44.7866, 20.4489),
-      markersByCat: [],
+      myMarker: L.latLng(44.7866, 20.4489),
+      markers: [],
       allLocations: [],
       categories: []
     };
@@ -89,24 +89,19 @@ export default {
     getLocations() {
       fetch("https://spomenici-api.herokuapp.com/kolekcija/itfirme")
         .then(res => res.json())
-        .then(data => {
-          const cat = new Set();
-          const result = data.data;
-          result.forEach((item, index) => {
-            cat.add(item.kategorija);
+        .then(res => {
+          this.allLocations = res.data;
+          this.categories = new Set(res.data.map(item => item.kategorija));
+          this.allLocations.forEach(item => {
+            this.markers.push(L.latLng(item.lokacija.lat, item.lokacija.lon));
           });
-          this.categories = cat;
-          this.allLocations = result;
         });
     },
     showByCat(cat) {
-      const locations = this.allLocations;
-      this.markersByCat = [];
-      locations.forEach((item, index) => {
+      this.markers = [];
+      this.allLocations.forEach(item => {
         if (item.kategorija === cat) {
-          this.markersByCat.push(
-            L.latLng(item.lokacija.lat, item.lokacija.lon)
-          );
+          this.markers.push(L.latLng(item.lokacija.lat, item.lokacija.lon));
         }
       });
     }
