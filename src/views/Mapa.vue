@@ -40,8 +40,10 @@
 </style>
 
 <script>
-import { LMap, LTileLayer, LMarker, LPopup, LTooltip } from "vue2-leaflet";
+import { latLng } from "leaflet";
+import { LMap, LTileLayer, LMarker, LPopup, LTooltip, LatLng } from "vue2-leaflet";
 import "leaflet/dist/leaflet.css";
+
 import Marker from '../utils/Marker';
 
 export default {
@@ -49,7 +51,7 @@ export default {
     return {
       pokazatiPoziciju: false,
       zoom: 12,
-      center: L.latLng(44.7866, 20.4489),
+      center: latLng(44.7866, 20.4489),
       url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -91,7 +93,7 @@ export default {
     showUserLoc() {
       navigator.geolocation.getCurrentPosition(position => {
         const { latitude, longitude } = position.coords;
-        this.center = L.latLng(latitude, longitude);
+        this.center = latLng(latitude, longitude);
         this.pokazatiPoziciju = true;
       });
     },
