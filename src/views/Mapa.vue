@@ -83,7 +83,7 @@ export default {
     showPosition(position) {
       this.userLat = position.coords.latitude;
       this.userLong = position.coords.longitude;
-      this.marker = L.latLng(this.userLat, this.userLong);
+      this.myMarker = L.latLng(this.userLat, this.userLong);
       this.center = L.latLng(this.userLat, this.userLong);
     },
     getLocations() {
