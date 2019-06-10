@@ -1,5 +1,4 @@
-/* global L */
-import { latLng } from "leaflet";
+import { latLng } from 'leaflet'
 
 let id = 0
 
