@@ -2,6 +2,7 @@ import { Icon, latLng } from 'leaflet'
 
 /* Suported colors:
   blue, red, green, orange, yellow, violet, grey, black
+  https://github.com/pointhi/leaflet-color-markers
 */
 const makeIcon = color => new Icon({
   iconUrl: `https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`,
