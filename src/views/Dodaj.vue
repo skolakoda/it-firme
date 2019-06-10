@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     showUserLoc () {
-        navigator.geolocation.getCurrentPosition(this.showPosition)
+      navigator.geolocation.getCurrentPosition(this.showPosition)
     },
     showPosition (position) {
       this.userLat = position.coords.latitude

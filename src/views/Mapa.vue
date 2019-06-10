@@ -40,25 +40,25 @@
 </style>
 
 <script>
-import { latLng } from "leaflet";
-import { LMap, LTileLayer, LMarker, LPopup, LTooltip, LatLng } from "vue2-leaflet";
-import "leaflet/dist/leaflet.css";
+import { latLng } from 'leaflet'
+import { LMap, LTileLayer, LMarker, LPopup, LTooltip, LatLng } from 'vue2-leaflet'
+import 'leaflet/dist/leaflet.css'
 
-import Marker from '../utils/Marker';
+import Marker from '../utils/Marker'
 
 export default {
-  data() {
+  data () {
     return {
       pokazatiPoziciju: false,
       zoom: 12,
       center: latLng(44.7866, 20.4489),
-      url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       markers: [],
       allLocations: [],
       categories: []
-    };
+    }
   },
   components: {
     LMap,
@@ -67,44 +67,44 @@ export default {
     LPopup,
     LTooltip
   },
-  mounted() {
-    delete L.Icon.Default.prototype._getIconUrl;
+  mounted () {
+    delete L.Icon.Default.prototype._getIconUrl
     L.Icon.Default.mergeOptions({
-      iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
-      iconUrl: require("leaflet/dist/images/marker-icon.png"),
-      shadowUrl: require("leaflet/dist/images/marker-shadow.png")
-    });
-    this.getLocations();
+      iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+      iconUrl: require('leaflet/dist/images/marker-icon.png'),
+      shadowUrl: require('leaflet/dist/images/marker-shadow.png')
+    })
+    this.getLocations()
   },
   methods: {
-    getLocations() {
-      fetch("https://spomenici-api.herokuapp.com/kolekcija/itfirme")
+    getLocations () {
+      fetch('https://spomenici-api.herokuapp.com/kolekcija/itfirme')
         .then(res => res.json())
         .then(res => {
-          this.allLocations = res.data;
-          this.categories = new Set(res.data.map(item => item.kategorija));
+          this.allLocations = res.data
+          this.categories = new Set(res.data.map(item => item.kategorija))
           this.allLocations.forEach(item => {
             this.markers.push(
               new Marker(item.lokacija, item.naslov, item.opis)
-            );
-          });
-        });
+            )
+          })
+        })
     },
-    showUserLoc() {
+    showUserLoc () {
       navigator.geolocation.getCurrentPosition(position => {
-        const { latitude, longitude } = position.coords;
-        this.center = latLng(latitude, longitude);
-        this.pokazatiPoziciju = true;
-      });
+        const { latitude, longitude } = position.coords
+        this.center = latLng(latitude, longitude)
+        this.pokazatiPoziciju = true
+      })
     },
-    showByCat(cat) {
-      this.markers = [];
+    showByCat (cat) {
+      this.markers = []
       this.allLocations.forEach(item => {
         if (item.kategorija === cat) {
-          this.markers.push(new Marker(item.lokacija, item.naslov, item.opis));
+          this.markers.push(new Marker(item.lokacija, item.naslov, item.opis))
         }
-      });
+      })
     }
   }
-};
+}
 </script>
