@@ -20,8 +20,15 @@
           </l-map>
         </div>
         <div class="col-md-3">
-          <div style="margin-bottom:5px;" v-for="category in categories" :key="category">
-            <button @click="showByCat(category)" class="btn btn-success">{{ category }}</button>
+          <div
+            style="margin-bottom: 5px;"
+            v-for="(category, i) in categories"
+            :key="i"
+          >
+            <button
+              @click="showByCat(category, i)"
+              v-bind:style="{ backgroundColor: getColor(i) }"
+            >{{ category }}</button>
           </div>
         </div>
       </div>
@@ -45,6 +52,7 @@ import { LMap, LTileLayer, LMarker, LPopup, LTooltip } from 'vue2-leaflet'
 import 'leaflet/dist/leaflet.css'
 
 import Marker from '../utils/Marker'
+import { colors } from '../utils/constants'
 
 export default {
   data () {
@@ -83,10 +91,11 @@ export default {
         .then(res => res.json())
         .then(res => {
           this.allLocations = res.data
-          this.categories = new Set(res.data.map(item => item.kategorija))
+          this.categories = [...new Set(res.data.map(item => item.kategorija))]
           this.allLocations.forEach(item => {
+          const catIndex = this.categories.indexOf(item.kategorija)
             this.markers.push(
-              new Marker(item.lokacija, item.naslov, item.opis)
+              new Marker(item.lokacija, item.naslov, item.opis, colors[catIndex % colors.length])
             )
           })
         })
@@ -98,13 +107,17 @@ export default {
         this.pokazatiPoziciju = true
       })
     },
-    showByCat (cat) {
+    showByCat (cat, i) {
       this.markers = []
       this.allLocations.forEach(item => {
         if (item.kategorija === cat) {
-          this.markers.push(new Marker(item.lokacija, item.naslov, item.opis))
+          const catIndex = this.categories.indexOf(item.kategorija)
+          this.markers.push(new Marker(item.lokacija, item.naslov, item.opis, colors[catIndex % colors.length]))
         }
       })
+    },
+    getColor(i) {
+      return colors[i % colors.length]
     }
   }
 }
