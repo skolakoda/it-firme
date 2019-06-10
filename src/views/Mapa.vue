@@ -9,12 +9,14 @@
         <div class="map2 col-md-9">
           <l-map :zoom="zoom" :center="center">
             <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-            <l-marker :lat-lng="center">
-              <l-popup>Your Position</l-popup>
+            <l-marker :lat-lng="center" :visible="pokazatiPoziciju">
+              <l-tooltip>Your Position</l-tooltip>
+              <l-popup>Ti se nalazis ovde</l-popup>
             </l-marker>
-            <span v-for="marker in markers" :key="marker.lat">
-              <l-marker :lat-lng="marker"></l-marker>
-            </span>
+            <l-marker v-for="marker in markers" :key="marker.id" :lat-lng.sync="marker.position">
+              <l-tooltip :content="marker.tooltip"/>
+              <l-popup :content="marker.popup"/>
+            </l-marker>
           </l-map>
         </div>
         <div class="col-md-3">
@@ -38,12 +40,14 @@
 </style>
 
 <script>
-import { LMap, LTileLayer, LMarker, LPopup } from "vue2-leaflet";
+import { LMap, LTileLayer, LMarker, LPopup, LTooltip } from "vue2-leaflet";
 import "leaflet/dist/leaflet.css";
+import Marker from '../utils/Marker';
 
 export default {
   data() {
     return {
+      pokazatiPoziciju: false,
       zoom: 12,
       center: L.latLng(44.7866, 20.4489),
       url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -58,7 +62,8 @@ export default {
     LMap,
     LTileLayer,
     LMarker,
-    LPopup
+    LPopup,
+    LTooltip
   },
   mounted() {
     delete L.Icon.Default.prototype._getIconUrl;
@@ -77,7 +82,9 @@ export default {
           this.allLocations = res.data;
           this.categories = new Set(res.data.map(item => item.kategorija));
           this.allLocations.forEach(item => {
-            this.markers.push(L.latLng(item.lokacija.lat, item.lokacija.lon));
+            this.markers.push(
+              new Marker(item.lokacija, item.naslov, item.opis)
+            );
           });
         });
     },
@@ -85,13 +92,14 @@ export default {
       navigator.geolocation.getCurrentPosition(position => {
         const { latitude, longitude } = position.coords;
         this.center = L.latLng(latitude, longitude);
+        this.pokazatiPoziciju = true;
       });
     },
     showByCat(cat) {
       this.markers = [];
       this.allLocations.forEach(item => {
         if (item.kategorija === cat) {
-          this.markers.push(L.latLng(item.lokacija.lat, item.lokacija.lon));
+          this.markers.push(new Marker(item.lokacija, item.naslov, item.opis));
         }
       });
     }
