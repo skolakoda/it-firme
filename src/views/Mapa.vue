@@ -9,7 +9,7 @@
         <div class="map2 col-md-9">
           <l-map :zoom="zoom" :center="center">
             <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-            <l-marker :lat-lng="myMarker">
+            <l-marker :lat-lng="center">
               <l-popup>Your Position</l-popup>
             </l-marker>
             <span v-for="marker in markers" :key="marker.lat">
@@ -44,14 +44,11 @@ import "leaflet/dist/leaflet.css";
 export default {
   data() {
     return {
-      userLat: "",
-      userLong: "",
       zoom: 12,
       center: L.latLng(44.7866, 20.4489),
       url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      myMarker: L.latLng(44.7866, 20.4489),
       markers: [],
       allLocations: [],
       categories: []
@@ -73,19 +70,6 @@ export default {
     this.getLocations();
   },
   methods: {
-    showUserLoc() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(this.showPosition);
-      } else {
-        this.error = "Geolocation is not supported by this browser.";
-      }
-    },
-    showPosition(position) {
-      this.userLat = position.coords.latitude;
-      this.userLong = position.coords.longitude;
-      this.myMarker = L.latLng(this.userLat, this.userLong);
-      this.center = L.latLng(this.userLat, this.userLong);
-    },
     getLocations() {
       fetch("https://spomenici-api.herokuapp.com/kolekcija/itfirme")
         .then(res => res.json())
@@ -96,6 +80,12 @@ export default {
             this.markers.push(L.latLng(item.lokacija.lat, item.lokacija.lon));
           });
         });
+    },
+    showUserLoc() {
+      navigator.geolocation.getCurrentPosition(position => {
+        const { latitude, longitude } = position.coords;
+        this.center = L.latLng(latitude, longitude);
+      });
     },
     showByCat(cat) {
       this.markers = [];
