@@ -41,7 +41,7 @@
 
 <script>
 import { Icon, latLng } from 'leaflet'
-import { LMap, LTileLayer, LMarker, LPopup, LTooltip, LatLng } from 'vue2-leaflet'
+import { LMap, LTileLayer, LMarker, LPopup, LTooltip } from 'vue2-leaflet'
 import 'leaflet/dist/leaflet.css'
 
 import Marker from '../utils/Marker'
