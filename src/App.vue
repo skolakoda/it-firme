@@ -1,14 +1,15 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <nav id="nav">
+      <router-link to="/">IT firme</router-link> |
+      <router-link to="/dodaj">Dodaj firmu</router-link> |
+      <router-link to="/prijava">Ulaz/Prijava</router-link>
+    </nav>
     <router-view/>
-    <div>footer</div>
+    <div>Mapa sa lokacijama domaćih IT firmi. Školakoda 2019.</div>
   </div>
 </template>
-/*komentar */
+
 <style>
 * {
   box-sizing: border-box;
