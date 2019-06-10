@@ -96,9 +96,9 @@ export default {
           this.allLocations = res.data
           this.izabrano = this.categories = [...new Set(res.data.map(item => item.kategorija))]
           this.allLocations.forEach(item => {
-          const index = this.categories.indexOf(item.kategorija)
+          const colorIndex = this.categories.indexOf(item.kategorija) % colors.length
             this.markers.push(
-              new Marker(item.lokacija, item.naslov, item.kategorija, item.opis, colors[index % colors.length])
+              new Marker(item.lokacija, item.naslov, item.kategorija, item.opis, colors[colorIndex])
             )
           })
         })
