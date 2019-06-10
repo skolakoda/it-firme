@@ -13,23 +13,20 @@
               <l-tooltip>Your Position</l-tooltip>
               <l-popup>Ti se nalazis ovde</l-popup>
             </l-marker>
-            <l-marker v-for="marker in markers" :key="marker.id" :lat-lng.sync="marker.position" :icon="marker.icon">
+            <l-marker v-for="marker in filteredItems" :key="marker.id" :lat-lng.sync="marker.position" :icon="marker.icon">
               <l-tooltip :content="marker.tooltip"/>
               <l-popup :content="marker.popup"/>
             </l-marker>
           </l-map>
         </div>
         <div class="col-md-3">
-          <div
-            style="margin-bottom: 5px;"
+          <label
             v-for="(category, i) in categories"
-            :key="i"
+            v-bind:style="{ backgroundColor: getColor(i) }"
+            style="display: block; text-align: left" :key="i"
           >
-            <button
-              @click="showByCat(category, i)"
-              v-bind:style="{ backgroundColor: getColor(i) }"
-            >{{ category }}</button>
-          </div>
+            <input type="checkbox" v-model="izabrano" :value="category"  /> {{ category }}
+          </label>
         </div>
       </div>
     </div>
@@ -65,7 +62,8 @@ export default {
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       markers: [],
       allLocations: [],
-      categories: []
+      categories: [],
+      izabrano: []
     }
   },
   components: {
@@ -85,17 +83,22 @@ export default {
     })
     this.getLocations()
   },
+  computed: {
+    filteredItems() {
+      return this.markers.filter(item => this.izabrano.includes(item.kategorija))
+    }
+  },
   methods: {
     getLocations () {
       fetch('https://spomenici-api.herokuapp.com/kolekcija/itfirme')
         .then(res => res.json())
         .then(res => {
           this.allLocations = res.data
-          this.categories = [...new Set(res.data.map(item => item.kategorija))]
+          this.izabrano = this.categories = [...new Set(res.data.map(item => item.kategorija))]
           this.allLocations.forEach(item => {
-          const catIndex = this.categories.indexOf(item.kategorija)
+          const index = this.categories.indexOf(item.kategorija)
             this.markers.push(
-              new Marker(item.lokacija, item.naslov, item.opis, colors[catIndex % colors.length])
+              new Marker(item.lokacija, item.naslov, item.kategorija, item.opis, colors[index % colors.length])
             )
           })
         })
@@ -105,15 +108,6 @@ export default {
         const { latitude, longitude } = position.coords
         this.center = latLng(latitude, longitude)
         this.pokazatiPoziciju = true
-      })
-    },
-    showByCat (cat, i) {
-      this.markers = []
-      this.allLocations.forEach(item => {
-        if (item.kategorija === cat) {
-          const catIndex = this.categories.indexOf(item.kategorija)
-          this.markers.push(new Marker(item.lokacija, item.naslov, item.opis, colors[catIndex % colors.length]))
-        }
       })
     },
     getColor(i) {
