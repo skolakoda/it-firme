@@ -13,7 +13,7 @@
               <l-tooltip>Your Position</l-tooltip>
               <l-popup>Ti se nalazis ovde</l-popup>
             </l-marker>
-            <l-marker v-for="marker in markers" :key="marker.id" :lat-lng.sync="marker.position">
+            <l-marker v-for="marker in markers" :key="marker.id" :lat-lng.sync="marker.position" :icon="marker.icon">
               <l-tooltip :content="marker.tooltip"/>
               <l-popup :content="marker.popup"/>
             </l-marker>
