@@ -85,7 +85,7 @@ export default {
   },
   computed: {
     filteredItems() {
-      return this.markers.filter(item => this.izabrano.includes(item.kategorija))
+      return this.markers.filter(item => this.izabrano.includes(item.category))
     }
   },
   methods: {
@@ -94,7 +94,7 @@ export default {
         .then(res => res.json())
         .then(res => {
           this.allLocations = res.data
-          this.izabrano = this.categories = [...new Set(res.data.map(item => item.kategorija))]
+          this.izabrano = this.categories = [...new Set(this.allLocations.map(item => item.kategorija))]
           this.markers = this.allLocations.map(item => {
             const catIndex = this.categories.indexOf(item.kategorija)
             return new Marker(item.lokacija, item.naslov, item.kategorija, item.opis, this.getColor(catIndex))

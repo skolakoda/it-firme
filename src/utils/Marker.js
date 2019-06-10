@@ -18,7 +18,7 @@ export default class Marker {
   constructor (lokacija, naslov, kategorija, opis, color = 'green') {
     this.id = id++
     this.position = latLng(lokacija.lat, lokacija.lon)
-    this.kategorija = kategorija
+    this.category = kategorija
     this.popup = `
       <h6>${naslov}</h6>
       <p>${opis}</p>
