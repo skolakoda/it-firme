@@ -1,16 +1,7 @@
 import { Icon, latLng } from 'leaflet'
 
-/* Suported colors:
-  blue, red, green, orange, yellow, violet, grey, black
-  https://github.com/pointhi/leaflet-color-markers
-*/
-const makeIcon = color => new Icon({
-  // TODO: implement category like this: iconUrl: require(`../assets/images/${item.kategorija}.svg`),
-  iconUrl: `https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`,
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-  iconSize: [25, 41],
-  shadowSize: [41, 41]
-})
+// icon colors https://github.com/pointhi/leaflet-color-markers
+export const colors = ['blue', 'red', 'green', 'orange', 'yellow', 'violet', 'grey', 'black']
 
 let id = 0
 
@@ -25,6 +16,15 @@ export default class Marker {
       <p>${opis}</p>
     `
     this.tooltip = naslov
-    this.icon = makeIcon(color)
+    this.icon = this.makeIcon(color)
+  }
+
+  makeIcon (color) {
+    return new Icon({
+      iconUrl: `https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`,
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+      iconSize: [25, 41],
+      shadowSize: [41, 41]
+    })
   }
 }

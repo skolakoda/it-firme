@@ -48,8 +48,7 @@ import { Icon, latLng } from 'leaflet'
 import { LMap, LTileLayer, LMarker, LPopup, LTooltip } from 'vue2-leaflet'
 import 'leaflet/dist/leaflet.css'
 
-import Marker from '../utils/Marker'
-import { colors } from '../utils/constants'
+import Marker, { colors } from '../utils/Marker'
 
 export default {
   data () {
