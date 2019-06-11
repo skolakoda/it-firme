@@ -22,11 +22,11 @@
   color: #2c3e50;
 
   display: grid;
-  grid-template-rows: 10vh auto 10vh;
-  height: 100vh;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
 }
 #nav {
-  padding: 30px;
+  padding: 20px;
 }
 
 #nav a {
