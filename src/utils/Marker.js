@@ -15,7 +15,8 @@ const makeIcon = color => new Icon({
 let id = 0
 
 export default class Marker {
-  constructor (lokacija, naslov, kategorija, opis, color = 'green') {
+  constructor (item, color = 'green') {
+    const { lokacija, naslov, kategorija, opis } = item
     this.id = id++
     this.position = latLng(lokacija.lat, lokacija.lon)
     this.category = kategorija

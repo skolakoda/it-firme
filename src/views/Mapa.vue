@@ -84,7 +84,7 @@ export default {
     this.getLocations()
   },
   computed: {
-    filteredItems() {
+    filteredItems () {
       return this.markers.filter(item => this.izabrano.includes(item.category))
     }
   },
@@ -97,7 +97,7 @@ export default {
           this.izabrano = this.categories = [...new Set(this.allLocations.map(item => item.kategorija))]
           this.markers = this.allLocations.map(item => {
             const catIndex = this.categories.indexOf(item.kategorija)
-            return new Marker(item.lokacija, item.naslov, item.kategorija, item.opis, this.getColor(catIndex))
+            return new Marker(item, this.getColor(catIndex))
           })
         })
     },
@@ -108,7 +108,7 @@ export default {
         this.pokazatiPoziciju = true
       })
     },
-    getColor(i) {
+    getColor (i) {
       return colors[i % colors.length]
     }
   }
