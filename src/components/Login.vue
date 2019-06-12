@@ -30,15 +30,15 @@
 
 <script>
 export default {
-  name: "AppLogin",
+  name: 'AppLogin',
   data () {
     return {
-      email: "",
-      password: ""
+      email: '',
+      password: ''
     }
   },
   methods: {
-    submitForm() {
+    submitForm () {
       console.log(this.email, this.password)
     }
   }

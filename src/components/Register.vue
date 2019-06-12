@@ -43,13 +43,13 @@ export default {
   name: 'AppRegister',
   data () {
     return {
-      email: "",
-      password: "",
-      repeatPassword: ""
+      email: '',
+      password: '',
+      repeatPassword: ''
     }
   },
   methods: {
-    submitForm() {
+    submitForm () {
       console.log(this.email, this.password, this.repeatPassword)
     }
   }

@@ -55,7 +55,7 @@ export default {
   },
   components: {
     AppRegister,
-    AppLogin,
-  },
+    AppLogin
+  }
 }
 </script>
