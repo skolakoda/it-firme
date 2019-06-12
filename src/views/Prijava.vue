@@ -4,7 +4,6 @@
     <div class="row">
       <div class="col-sm-6">
         <button
-          type="button"
           class="btn btn-outline-success btn-sm btn-block"
           v-bind:class="{active : showRegister}"
           @click="toggleView"
@@ -12,7 +11,6 @@
       </div>
       <div class="col-sm-6">
         <button
-          type="button"
           class="btn btn-outline-success btn-sm btn-block"
           v-bind:class="{active : !showRegister}"
           @click="toggleView"
@@ -20,61 +18,9 @@
       </div>
     </div>
 
-    <form v-if="showRegister">
-      <h4>Sign Up</h4>
-      <hr>
-      <label for="registerEmail">Email</label>
-      <input
-        name="email"
-        type="email"
-        class="form-control"
-        id="registerEmail"
-        aria-describedby="emailHelp"
-        placeholder="Enter email"
-      >
-      <small id="emailHelp" class="form-text text-muted"></small>
-      <label for="registerPassword1">Password</label>
-      <input
-        name="password"
-        type="password"
-        class="form-control"
-        id="registerPassword1"
-        placeholder="Enter password"
-      >
-      <label for="registerPassword2">Repeat password</label>
-      <input
-        name="repeatPassword"
-        type="password"
-        class="form-control"
-        id="registerPassword2"
-        placeholder="Enter password"
-      >
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    <app-register v-if="showRegister" />
+    <app-login v-if="!showRegister" />
 
-    <form v-if="!showRegister">
-      <h4>Log In</h4>
-      <hr>
-      <label for="loginEmail">Email</label>
-      <input
-        name="email"
-        type="email"
-        class="form-control"
-        id="loginEmail"
-        aria-describedby="emailHelp"
-        placeholder="Enter email"
-      >
-      <small id="emailHelp" class="form-text text-muted"></small>
-      <label for="loginPassword">Password</label>
-      <input
-        name="password"
-        type="password"
-        class="form-control"
-        id="loginPassword"
-        placeholder="Enter password"
-      >
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
   </div>
 </template>
 
@@ -98,6 +44,9 @@ form {
 </style>
 
 <script>
+import AppRegister from '../components/Register'
+import AppLogin from '../components/Login'
+
 export default {
   data () {
     return {
@@ -108,6 +57,10 @@ export default {
     toggleView () {
       this.showRegister = !this.showRegister
     }
-  }
+  },
+  components: {
+    AppRegister,
+    AppLogin,
+  },
 }
 </script>
