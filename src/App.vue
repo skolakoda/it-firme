@@ -6,7 +6,7 @@
       <router-link to="/prijava">Ulaz/Prijava</router-link>
     </nav>
     <router-view/>
-    <div>Mapa sa lokacijama domaćih IT firmi. Školakoda 2019.</div>
+    <footer>Mapa sa lokacijama domaćih IT firmi. Školakoda 2019.</footer>
   </div>
 </template>
 
@@ -14,27 +14,33 @@
 * {
   box-sizing: border-box;
 }
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 
   display: grid;
   grid-template-rows: auto 1fr auto;
   min-height: 100vh;
 }
-#nav {
+
+nav {
   padding: 20px;
+  text-align: center;
 }
 
-#nav a {
+nav a {
   font-weight: bold;
   color: #2c3e50;
 }
 
-#nav a.router-link-exact-active {
+nav a.router-link-exact-active {
   color: #42b983;
+}
+
+footer {
+  text-align: center;
 }
 </style>

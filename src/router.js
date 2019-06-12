@@ -17,6 +17,11 @@ export default new Router({
       path: '/dodaj',
       name: 'dodaj',
       component: () => import('./views/Dodaj.vue')
+    },
+    {
+      path: '/prijava',
+      name: 'prijava',
+      component: () => import('./views/Prijava.vue')
     }
   ]
 })
