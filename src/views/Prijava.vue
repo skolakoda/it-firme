@@ -80,7 +80,6 @@
 
 <style>
 .prijava {
-  width: 30rem;
   margin: 1rem auto;
   border: 1px solid #42b983;
   border-radius: 5px;
@@ -89,6 +88,12 @@
 
 form {
   margin-top: 15px;
+}
+
+@media (min-width: 768px) {
+  .prijava {
+    width: 30rem;
+  }
 }
 </style>
 

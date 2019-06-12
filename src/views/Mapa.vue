@@ -56,7 +56,7 @@
 }
 @media (min-width: 992px) {
   .mapa {
-    height: 600px;
+    height: 75vh;
   }
   .sidebar {
     min-width: 175px;
