@@ -84,7 +84,7 @@ export default {
     this.getLocations()
   },
   computed: {
-    filteredItems() {
+    filteredItems () {
       return this.markers.filter(item => this.izabrano.includes(item.category))
     }
   },
@@ -108,7 +108,7 @@ export default {
         this.pokazatiPoziciju = true
       })
     },
-    getColor(i) {
+    getColor (i) {
       return colors[i % colors.length]
     }
   }
