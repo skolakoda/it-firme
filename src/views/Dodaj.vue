@@ -38,6 +38,12 @@ label {
 .margin {
   margin-top: 15px;
 }
+
+@media (min-width: 350px) {
+  .wrap {
+    width: 300px;
+  }
+}
 </style>
 
 <script>
