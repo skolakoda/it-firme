@@ -6,14 +6,14 @@
         <button
           class="btn btn-outline-success btn-sm btn-block"
           v-bind:class="{active : showRegister}"
-          @click="toggleView"
+          @click="showRegister=true"
         >Sign Up</button>
       </div>
       <div class="col-sm-6">
         <button
           class="btn btn-outline-success btn-sm btn-block"
           v-bind:class="{active : !showRegister}"
-          @click="toggleView"
+          @click="showRegister=false"
         >Log In</button>
       </div>
     </div>
@@ -51,11 +51,6 @@ export default {
   data () {
     return {
       showRegister: true
-    }
-  },
-  methods: {
-    toggleView () {
-      this.showRegister = !this.showRegister
     }
   },
   components: {

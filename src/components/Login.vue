@@ -1,24 +1,26 @@
 <template>
-  <form>
+  <form v-on:submit.prevent="submitForm">
     <h4>Log In</h4>
     <hr>
-    <label for="loginEmail">Email</label>
+    <label for="email">Email</label>
     <input
+      v-model="email"
       name="email"
       type="email"
       class="form-control"
-      id="loginEmail"
+      id="email"
       aria-describedby="emailHelp"
       placeholder="Enter email"
       required
     >
     <small id="emailHelp" class="form-text text-muted"></small>
-    <label for="loginPassword">Password</label>
+    <label for="password">Password</label>
     <input
+      v-model="password"
       name="password"
       type="password"
       class="form-control"
-      id="loginPassword"
+      id="password"
       placeholder="Enter password"
       required
     >
@@ -28,6 +30,17 @@
 
 <script>
 export default {
-  name: "AppLogin"
+  name: "AppLogin",
+  data () {
+    return {
+      email: "",
+      password: ""
+    }
+  },
+  methods: {
+    submitForm() {
+      console.log(this.email, this.password)
+    }
+  }
 }
 </script>

@@ -1,33 +1,36 @@
 <template>
-  <form>
+  <form v-on:submit.prevent="submitForm">
     <h4>Sign Up</h4>
     <hr>
-    <label for="registerEmail">Email</label>
+    <label for="email">Email</label>
     <input
+      v-model="email"
       name="email"
       type="email"
       class="form-control"
-      id="registerEmail"
+      id="email"
       aria-describedby="emailHelp"
       placeholder="Enter email"
       required
     >
     <small id="emailHelp" class="form-text text-muted"></small>
-    <label for="registerPassword1">Password</label>
+    <label for="password">Password</label>
     <input
+      v-model="password"
       name="password"
       type="password"
       class="form-control"
-      id="registerPassword1"
+      id="password"
       placeholder="Enter password"
       required
     >
-    <label for="registerPassword2">Repeat password</label>
+    <label for="repeatPassword">Repeat password</label>
     <input
+      v-model="repeatPassword"
       name="repeatPassword"
       type="password"
       class="form-control"
-      id="registerPassword2"
+      id="repeatPassword"
       placeholder="Enter password"
       required
     >
@@ -38,6 +41,18 @@
 <script>
 export default {
   name: 'AppRegister',
+  data () {
+    return {
+      email: "",
+      password: "",
+      repeatPassword: ""
+    }
+  },
+  methods: {
+    submitForm() {
+      console.log(this.email, this.password, this.repeatPassword)
+    }
+  }
 }
 </script>
 
