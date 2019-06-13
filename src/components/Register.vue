@@ -11,9 +11,10 @@
       id="email"
       aria-describedby="emailHelp"
       placeholder="Enter email"
+      @change="validateInput('email', email.value)"
       required
     >
-    <small id="emailHelp" class="form-text text-muted"></small>
+    <small id="emailHelp" class="form-text">{{ email.error }}</small>
     <label for="password">Password</label>
     <input
       v-model="password.value"
@@ -22,8 +23,10 @@
       class="form-control"
       id="password"
       placeholder="Enter password"
+      @change="validateInput('password', password.value)"
       required
     >
+    <small id="passwordHelp" class="form-text">{{ password.error }}</small>
     <label for="repeatPassword">Repeat password</label>
     <input
       v-model="repeatPassword.value"
@@ -32,8 +35,10 @@
       class="form-control"
       id="repeatPassword"
       placeholder="Enter password"
+      @change="validateInput('repeatPassword', repeatPassword.value, password.value)"
       required
     >
+    <small id="repeatHelp" class="form-text">{{ repeatPassword.error }}</small>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </template>
@@ -46,26 +51,36 @@ export default {
     return {
       email: {
         value: '',
-        error: ''
+        error: '',
+        validated: false
       },
       password: {
         value: '',
-        error: ''
+        error: '',
+        validated: false
       },
       repeatPassword: {
         value: '',
-        error: ''
-      },
-      validated: false
+        error: '',
+        validated: false
+      }
     }
   },
   methods: {
     submitForm () {
-      if (this.validated) {
-
+      if (this.email.validated && this.password.validated && this.repeatPassword.validated) {
+        console.log('submit')
+      } else {
+        console.log('nisu validirana sva polja')
       }
-      console.log(Validator.validate('email', this.email.value))
-      console.log(this.email.value, this.password.value, this.repeatPassword.value)
+    },
+    validateInput (el, val, equal = false) {
+      let inputName = el
+      let value = val
+      let compareTo = equal
+      let validateResult = Validator.validate(inputName, value, compareTo)
+      this[inputName].validated = validateResult.validated
+      this[inputName].error = validateResult.error
     }
   }
 }

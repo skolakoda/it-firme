@@ -36,6 +36,14 @@ form {
   margin-top: 15px;
 }
 
+small {
+  color: red;
+}
+
+.btn {
+  margin-top: 10px;
+}
+
 @media (min-width: 768px) {
   .prijava {
     width: 30rem;

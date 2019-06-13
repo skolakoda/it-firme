@@ -7,32 +7,56 @@ export default class Validator {
     switch (field) {
       case 'name' :
         if (field.length > 2) {
-          return true
+          return {
+            validated: true,
+            error: ''
+          }
         } else {
-          return 'Polje ime mora imati minimum 3 karaktera!'
+          return {
+            validated: false,
+            error: 'Polje ime mora imati minimum 3 karaktera!'
+          }
         }
         break
       case 'email' :
         // eslint-disable-next-line no-useless-escape
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data)) {
-          return true
+          return {
+            validated: true,
+            error: ''
+          }
         } else {
-          return 'Unesite ispravni format email adrese!'
+          return {
+            validated: false,
+            error: 'Unesite ispravni format email adrese!'
+          }
         }
         break
       case 'password' :
         if (/^(?=.{6,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$/.test(data)) {
-          return true
+          return {
+            validated: true,
+            error: ''
+          }
         } else {
-          return 'Šifra mora imati minimum 6 karaktera, jedno veliko/malo slovo, specijalni karakter i broj'
+          return {
+            validated: false,
+            error: 'Šifra mora imati minimum 6 karaktera, jedno veliko/malo slovo, specijalni karakter i broj'
+          }
         }
         break
       case 'repeatPassword' :
         if (compare) {
           if (data === compare) {
-            return true
+            return {
+              validated: true,
+              error: ''
+            }
           } else {
-            return 'Polje nije identično sa šifrom!'
+            return {
+              validated: false,
+              error: 'Polje nije identično sa šifrom!'
+            }
           }
         }
         break
