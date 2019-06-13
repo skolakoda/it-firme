@@ -45,6 +45,7 @@
 
 <script>
 import Validator from '../utils/Validator'
+import postData from '../utils/PostRequest'
 export default {
   name: 'AppRegister',
   data () {
@@ -69,7 +70,14 @@ export default {
   methods: {
     submitForm () {
       if (this.email.validated && this.password.validated && this.repeatPassword.validated) {
-        console.log('submit')
+        const url = 'https://spomenici-api.herokuapp.com/korisnici/registracija'
+        postData(url, {
+          'email': this.email.value,
+          'password': this.password.value,
+          'repeatPassword': this.repeatPassword.value
+        })
+          .then(res => console.log(res))
+          .catch(error => console.log(error))
       } else {
         console.log('nisu validirana sva polja')
       }

@@ -1,5 +1,5 @@
 <template>
-  <form v-on:submit.prevent="submitForm">
+  <form v-if="logged" v-on:submit.prevent="submitForm">
     <h4>Log In</h4>
     <hr>
     <label for="email">Email</label>
@@ -26,21 +26,38 @@
     >
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
+  <div v-else class="logged">Uspešno logovanje</div>
 </template>
 
 <script>
+import postData from '../utils/PostRequest'
 export default {
   name: 'AppLogin',
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      logged: false
     }
   },
   methods: {
     submitForm () {
-      console.log(this.email, this.password)
+      const url = 'https://spomenici-api.herokuapp.com/korisnici/login'
+      postData(url, {
+        'email': this.email,
+        'password': this.password
+      })
+        .then(res => {
+          if (res.data) {
+            const data = res.data
+            localStorage.setItem('token', data)
+            this.logged = true
+          }
+          console.log(res)
+        })
+        .catch(error => console.log(error))
     }
   }
 }
+
 </script>

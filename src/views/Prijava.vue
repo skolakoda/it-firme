@@ -44,6 +44,10 @@ small {
   margin-top: 10px;
 }
 
+.logged {
+  margin: 15px auto;
+}
+
 @media (min-width: 768px) {
   .prijava {
     width: 30rem;
