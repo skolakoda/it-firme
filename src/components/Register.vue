@@ -4,7 +4,7 @@
     <hr>
     <label for="email">Email</label>
     <input
-      v-model="email"
+      v-model="email.value"
       name="email"
       type="email"
       class="form-control"
@@ -16,7 +16,7 @@
     <small id="emailHelp" class="form-text text-muted"></small>
     <label for="password">Password</label>
     <input
-      v-model="password"
+      v-model="password.value"
       name="password"
       type="password"
       class="form-control"
@@ -26,7 +26,7 @@
     >
     <label for="repeatPassword">Repeat password</label>
     <input
-      v-model="repeatPassword"
+      v-model="repeatPassword.value"
       name="repeatPassword"
       type="password"
       class="form-control"
@@ -39,18 +39,33 @@
 </template>
 
 <script>
+import Validator from '../utils/Validator'
 export default {
   name: 'AppRegister',
   data () {
     return {
-      email: '',
-      password: '',
-      repeatPassword: ''
+      email: {
+        value: '',
+        error: ''
+      },
+      password: {
+        value: '',
+        error: ''
+      },
+      repeatPassword: {
+        value: '',
+        error: ''
+      },
+      validated: false
     }
   },
   methods: {
     submitForm () {
-      console.log(this.email, this.password, this.repeatPassword)
+      if (this.validated) {
+
+      }
+      console.log(Validator.validate('email', this.email.value))
+      console.log(this.email.value, this.password.value, this.repeatPassword.value)
     }
   }
 }
