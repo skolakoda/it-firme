@@ -50,6 +50,7 @@ label {
 </style>
 
 <script>
+import postData from '../utils/PostRequest'
 export default {
   data () {
     return {
@@ -69,7 +70,7 @@ export default {
       this.userLong = position.coords.longitude
     },
     submitForm (e) {
-      fetch('http://localhost:8090/kolekcija/itfirme/dodaj', {
+      /* fetch('http://localhost:8090/kolekcija/itfirme/dodaj', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json', // mozda izostaviti ili promeniti zbog slike
@@ -84,6 +85,17 @@ export default {
           slika: this.slika
         })
       }).then(res => res.json())
+        .then(res => console.log(res))
+        .catch(err => console.log(err)) */
+      const url = 'https://spomenici-api.herokuapp.com/kolekcija/itfirme/dodaj'
+      postData(url, {
+        naslov: this.naslov,
+        opis: this.opis,
+        kategorija: this.kategorija,
+        lat: this.userLat,
+        lon: this.userLong,
+        slika: this.slika
+      }, 'application/x-www-form-urlencoded', `Bearer ${localStorage.getItem('token')}`)
         .then(res => console.log(res))
         .catch(err => console.log(err))
     }

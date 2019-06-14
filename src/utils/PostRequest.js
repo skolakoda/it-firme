@@ -5,7 +5,8 @@ export default function postData (url, data, contentType = 'json', auth = false)
   return fetch(url, {
     method: 'POST',
     headers: {
-      'Content-Type': `${contentType}`
+      'Content-Type': `${contentType}`,
+      'auth': `${auth}`
     },
     body: data
   })
