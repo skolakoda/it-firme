@@ -1,21 +1,24 @@
 <template>
   <div class="wrap">
     <h2>Dodaj novu IT firmu</h2>
-    <form action="https://spomenici-api.herokuapp.com/kolekcija/itfirme/dodaj" method="POST">
+    <form v-on:submit.prevent="submitForm" encType="multipart/form-data">
       <label for="naslov">naslov: </label>
-      <input name="naslov" id="naslov" required>
+      <input v-model="naslov" name="naslov" id="naslov" required>
 
       <label for="kategorija" title="Npr. gaming, web-dev, qa">kategorija: </label>
-      <input name="kategorija" id="kategorija" required>
+      <input v-model="kategorija" name="kategorija" id="kategorija" required>
 
       <label for="opis">opis: </label>
-      <input name="opis" id="opis">
+      <input v-model="opis" name="opis" id="opis">
 
       <label for="lat">lat: </label>
       <input v-model="userLat" name="lat" id="lat" required>
 
       <label for="lon">lon: </label>
       <input v-model="userLong" name="lon" id="lon" required>
+
+      <label for="slika">slika: </label>
+      <input type="file" name="slika" accept="image/*" />
 
       <button @click="showUserLoc" type="button" class="btn btn-primary margin">Popuni moju lokaciju</button>
       <button class="btn btn-primary margin">Pošalji</button>
@@ -50,6 +53,9 @@ label {
 export default {
   data () {
     return {
+      naslov: '',
+      opis: '',
+      kategorija: '',
       userLat: '',
       userLong: ''
     }
@@ -61,6 +67,25 @@ export default {
     showPosition (position) {
       this.userLat = position.coords.latitude
       this.userLong = position.coords.longitude
+    },
+    submitForm (e) {
+      fetch('http://localhost:8090/kolekcija/itfirme/dodaj', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', // mozda izostaviti ili promeniti zbog slike
+          auth: `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+          naslov: this.naslov,
+          opis: this.opis,
+          kategorija: this.kategorija,
+          lat: this.userLat,
+          lon: this.userLong,
+          slika: this.slika
+        })
+      }).then(res => res.json())
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
     }
   }
 }
