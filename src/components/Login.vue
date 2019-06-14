@@ -1,5 +1,5 @@
 <template>
-  <form v-if="logged" v-on:submit.prevent="submitForm">
+  <form v-if="!logged" v-on:submit.prevent="submitForm">
     <h4>Log In</h4>
     <hr>
     <label for="email">Email</label>
@@ -49,8 +49,8 @@ export default {
       })
         .then(res => {
           if (res.data) {
-            const data = res.data
-            localStorage.setItem('token', data)
+            const token = res.data
+            localStorage.setItem('token', token)
             this.logged = true
           }
           console.log(res)

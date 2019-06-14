@@ -9,7 +9,7 @@
       <input name="kategorija" id="kategorija" required>
 
       <label for="opis">opis: </label>
-      <input name="opis" id="opis" required>
+      <input name="opis" id="opis">
 
       <label for="lat">lat: </label>
       <input v-model="userLat" name="lat" id="lat" required>
