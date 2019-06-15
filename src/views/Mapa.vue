@@ -4,6 +4,11 @@
     <p>
       <button @click="showUserLoc" class="btn btn-primary">Prikaži moju lokaciju</button>
     </p>
+    <span class="hamburger" @click="hamburgerClicked" :class="{'change': sideBarOpened}">
+      <div class="bar1"></div>
+      <div class="bar2"></div>
+      <div class="bar3"></div>
+    </span>
     <div class="relative">
       <div class="mapa">
         <l-map :zoom="zoom" :center="center">
@@ -23,7 +28,7 @@
           </l-marker>
         </l-map>
       </div>
-      <aside class="sidebar">
+      <aside class="sidebar" :class="{'sideOpen': sideBarOpened}">
         <label
           v-for="(category, i) in categories"
           v-bind:style="{ backgroundColor: getColor(i) }"
@@ -49,6 +54,46 @@
   width: 100%;
 }
 
+.hamburger {
+  position: absolute;
+  right: 10px;
+  top: 30px;
+  cursor: pointer;
+}
+
+label {
+  border-radius: 25px;
+  padding: 5px 10px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.sideOpen {
+  min-width: 190px;
+  padding: 10px;
+  border-radius: 25px;
+}
+
+.bar1, .bar2, .bar3 {
+  width: 35px;
+  height: 5px;
+  background-color: #333;
+  margin: 6px 0;
+  transition: 0.4s;
+}
+
+.change .bar1 {
+  -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+  transform: rotate(-45deg) translate(-9px, 6px);
+}
+
+.change .bar2 {opacity: 0;}
+
+.change .bar3 {
+  -webkit-transform: rotate(45deg) translate(-8px, -8px);
+  transform: rotate(45deg) translate(-8px, -8px);
+}
+
 @media (min-width: 768px) {
   .mapa {
     height: 450px;
@@ -58,12 +103,22 @@
   .mapa {
     height: 75vh;
   }
+
+  /* The side navigation menu */
   .sidebar {
-    min-width: 175px;
+    width: 0;
     position: absolute;
-    right: 10px;
-    top: 20px;
     z-index: 999;
+    top: 20px;
+    right: 10px;
+    background-color: lightcoral;
+    overflow-x: hidden;
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+  }
+}
+@media (max-width: 460px) {
+  .hamburger {
+    display: none;
   }
 }
 </style>
@@ -87,7 +142,8 @@ export default {
       markers: [],
       allLocations: [],
       categories: [],
-      izabrano: []
+      izabrano: [],
+      sideBarOpened: false
     }
   },
   components: {
@@ -136,6 +192,10 @@ export default {
     },
     getColor (i) {
       return colors[i % colors.length]
+    },
+    hamburgerClicked () {
+      this.sideBarOpened = !this.sideBarOpened
+      console.log(this.sideBarOpened)
     }
   }
 }
