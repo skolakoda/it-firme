@@ -43,7 +43,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 .relative {
   position: relative;
 }
