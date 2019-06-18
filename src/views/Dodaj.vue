@@ -75,7 +75,7 @@ export default {
       const forma = document.getElementById('forma')
       const formData = new FormData(forma)
       this.poruka = ''
-      fetch('http://localhost:8090/kolekcija/itfirme/dodaj', {
+      fetch('https://spomenici-api.herokuapp.com/kolekcija/itfirme/dodaj', {
         method: 'POST',
         headers: {
           auth: `Bearer ${localStorage.getItem('token')}`
