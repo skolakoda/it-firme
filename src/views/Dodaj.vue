@@ -1,6 +1,7 @@
 <template>
   <div class="wrap">
     <h2>Dodaj novu IT firmu</h2>
+    <p>{{poruka}}</p>
     <form v-on:submit.prevent="submitForm" encType="multipart/form-data" id="forma">
       <label for="naslov">naslov: </label>
       <input v-model="naslov" name="naslov" id="naslov" required>
@@ -54,6 +55,7 @@ import postData from '../utils/PostRequest'
 export default {
   data () {
     return {
+      poruka: '',
       naslov: '',
       opis: '',
       kategorija: '',
@@ -72,6 +74,7 @@ export default {
     submitForm (e) {
       const forma = document.getElementById('forma')
       const formData = new FormData(forma)
+      this.poruka = ''
       fetch('http://localhost:8090/kolekcija/itfirme/dodaj', {
         method: 'POST',
         headers: {
@@ -79,8 +82,8 @@ export default {
         },
         body: formData
       }).then(res => res.json())
-        .then(res => console.log(res))
-        .catch(err => console.log(err))
+        .then(res => this.poruka = res.message)
+        .catch(err => this.poruka = err.message)
       /* ne salje sliku */
       // const url = 'https://spomenici-api.herokuapp.com/kolekcija/itfirme/dodaj'
       // postData(url, {
