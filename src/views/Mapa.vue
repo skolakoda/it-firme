@@ -108,7 +108,7 @@ label {
   .sidebar {
     width: 0;
     position: absolute;
-    z-index: 999;
+    z-index: 9999;
     top: 20px;
     right: 10px;
     background-color: lightcoral;
@@ -143,7 +143,7 @@ export default {
       allLocations: [],
       categories: [],
       izabrano: [],
-      sideBarOpened: false
+      sideBarOpened: true
     }
   },
   components: {
