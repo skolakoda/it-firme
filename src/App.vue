@@ -15,6 +15,10 @@
   box-sizing: border-box;
 }
 
+img {
+  max-width: 100%;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

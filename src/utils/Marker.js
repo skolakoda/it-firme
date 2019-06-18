@@ -7,11 +7,12 @@ let id = 0
 
 export default class Marker {
   constructor (item, color = 'green') {
-    const { lokacija, naslov, kategorija, opis } = item
+    const { lokacija, naslov, kategorija, opis, slika } = item
     this.id = id++
     this.position = latLng(lokacija.lat, lokacija.lon)
     this.category = kategorija
     this.popup = `
+      ${slika ? `<img src="data:image/png;base64, ${slika}" />` : ''}
       <h6>${naslov}</h6>
       <p>${opis}</p>
     `
