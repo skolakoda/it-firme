@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
     <h2>Dodaj novu IT firmu</h2>
-    <form v-on:submit.prevent="submitForm" encType="multipart/form-data">
+    <form v-on:submit.prevent="submitForm" encType="multipart/form-data" id="forma">
       <label for="naslov">naslov: </label>
       <input v-model="naslov" name="naslov" id="naslov" required>
 
@@ -70,34 +70,29 @@ export default {
       this.userLong = position.coords.longitude
     },
     submitForm (e) {
-      /* fetch('http://localhost:8090/kolekcija/itfirme/dodaj', {
+      const forma = document.getElementById('forma')
+      const formData = new FormData(forma)
+      fetch('http://localhost:8090/kolekcija/itfirme/dodaj', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json', // mozda izostaviti ili promeniti zbog slike
           auth: `Bearer ${localStorage.getItem('token')}`
         },
-        body: JSON.stringify({
-          naslov: this.naslov,
-          opis: this.opis,
-          kategorija: this.kategorija,
-          lat: this.userLat,
-          lon: this.userLong,
-          slika: this.slika
-        })
+        body: formData
       }).then(res => res.json())
         .then(res => console.log(res))
-        .catch(err => console.log(err)) */
-      const url = 'https://spomenici-api.herokuapp.com/kolekcija/itfirme/dodaj'
-      postData(url, {
-        naslov: this.naslov,
-        opis: this.opis,
-        kategorija: this.kategorija,
-        lat: this.userLat,
-        lon: this.userLong,
-        slika: this.slika
-      }, 'application/x-www-form-urlencoded', `Bearer ${localStorage.getItem('token')}`)
-        .then(res => console.log(res))
         .catch(err => console.log(err))
+      /* ne salje sliku */
+      // const url = 'https://spomenici-api.herokuapp.com/kolekcija/itfirme/dodaj'
+      // postData(url, {
+      //   naslov: this.naslov,
+      //   opis: this.opis,
+      //   kategorija: this.kategorija,
+      //   lat: this.userLat,
+      //   lon: this.userLong,
+      //   slika: this.slika
+      // }, 'application/x-www-form-urlencoded', `Bearer ${localStorage.getItem('token')}`)
+      //   .then(res => console.log(res))
+      //   .catch(err => console.log(err))
     }
   }
 }
