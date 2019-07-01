@@ -1,4 +1,4 @@
-export default function postData (url, data, contentType = 'json', auth = false) {
+export default function postData (url, data, contentType = 'json', token = '') {
   contentType = contentType === 'form' ? 'application/x-www-form-urlencoded' : 'application/json'
   // data = contentType === 'json' ? JSON.stringify(data) : data
   data = JSON.stringify(data)
@@ -6,7 +6,7 @@ export default function postData (url, data, contentType = 'json', auth = false)
     method: 'POST',
     headers: {
       'Content-Type': `${contentType}`,
-      'auth': `${auth}`
+      'x-auth-token': token
     },
     body: data
   })

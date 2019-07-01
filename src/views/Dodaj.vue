@@ -78,7 +78,7 @@ export default {
       fetch('https://spomenici-api.herokuapp.com/kolekcija/itfirme/dodaj', {
         method: 'POST',
         headers: {
-          auth: `Bearer ${localStorage.getItem('token')}`
+          'x-auth-token': localStorage.getItem('token')
         },
         body: formData
       }).then(res => res.json())
