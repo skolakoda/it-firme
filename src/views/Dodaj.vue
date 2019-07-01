@@ -51,7 +51,6 @@ label {
 </style>
 
 <script>
-import postData from '../utils/PostRequest'
 export default {
   data () {
     return {
@@ -82,20 +81,8 @@ export default {
         },
         body: formData
       }).then(res => res.json())
-        .then(res => this.poruka = res.message)
-        .catch(err => this.poruka = err.message)
-      /* ne salje sliku */
-      // const url = 'https://spomenici-api.herokuapp.com/kolekcija/itfirme/dodaj'
-      // postData(url, {
-      //   naslov: this.naslov,
-      //   opis: this.opis,
-      //   kategorija: this.kategorija,
-      //   lat: this.userLat,
-      //   lon: this.userLong,
-      //   slika: this.slika
-      // }, 'application/x-www-form-urlencoded', `Bearer ${localStorage.getItem('token')}`)
-      //   .then(res => console.log(res))
-      //   .catch(err => console.log(err))
+        .then(res => { this.poruka = res.message })
+        .catch(err => { this.poruka = err.message })
     }
   }
 }
